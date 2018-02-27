@@ -1,3 +1,5 @@
+var path = require("path");
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -5,7 +7,7 @@ module.exports = function(app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.sendFile('index.html'); // load the index.ejs file
+        res.sendFile(path.join(__dirname + '/../views/index.html')); // load the index.html file
     });
 
     // =====================================
@@ -15,7 +17,7 @@ module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.sendFile('login.html'); 
+        res.sendFile(path.join(__dirname + '/../views/login.html')); 
     });
 
     // =====================================
@@ -29,8 +31,8 @@ module.exports = function(app, passport) {
     // =====================================
     // HOME ==============================
     // =====================================
-    app.get('/home.html', function(req, res) {
-        res.sendFile('home.html');
+    app.get('/home', function(req, res) {
+        isLoggedIn(req, res, '/home')
     });
 };
 

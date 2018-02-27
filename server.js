@@ -25,8 +25,12 @@ app.use(session({ secret: 'docers' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
+// content
+app.use(express.static(__dirname + '/public'));
+
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
 
 // launch ======================================================================
 app.listen(port);
