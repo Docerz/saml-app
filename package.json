@@ -1,15 +1,14 @@
-
 {
   "name": "saml-app",
   "main": "server.js",
-  "dependencies" : {
-    "express" : "latest",
-    "passport" : "latest",
-    "passport-local" : "latest",
-    "bcrypt-nodejs" : "latest",
-
+  "dependencies": {
+    "express": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "bcrypt-nodejs": "latest",
     "morgan": "latest",
     "body-parser": "latest",
-    "cookie-parser": "latest"
+    "cookie-parser": "latest",
+    "express-session": "latest"
   }
 }

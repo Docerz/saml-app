@@ -10,6 +10,7 @@ var passport = require('passport');
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
+var session      = require('express-session');
 
 
 // require('./config/passport')(passport); // pass passport for configuration
@@ -29,4 +30,4 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // launch ======================================================================
 app.listen(port);
-console.log('The magic happens on port ' + port);
+console.log('Welcome to the SAML Docer on port ' + port);
