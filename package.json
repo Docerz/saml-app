@@ -6,6 +6,7 @@
     "morgan": "latest",
     "body-parser": "latest",
     "express-session": "latest",
-    "helmet": "latest"
+    "helmet": "latest",
+    "passport-saml": "latest"
   }
 }
