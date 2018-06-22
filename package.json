@@ -1,12 +1,19 @@
 {
   "name": "saml-app",
-  "main": "server.js",
+  "version": "0.0.0",
+  "private": true,
   "dependencies": {
-    "express": "latest",
-    "morgan": "latest",
     "body-parser": "latest",
+    "cookie-parser": "latest",
+    "express": "latest",
     "express-session": "latest",
+    "fs": "latest",
     "helmet": "latest",
+    "http": "latest",
+    "http-errors": "latest",
+    "https": "latest",
+    "morgan": "latest",
+    "passport": "latest",
     "passport-saml": "latest"
   }
 }
