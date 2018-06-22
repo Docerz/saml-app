@@ -9,9 +9,6 @@
     "express-session": "latest",
     "fs": "latest",
     "helmet": "latest",
-    "http": "latest",
-    "http-errors": "latest",
-    "https": "latest",
     "morgan": "latest",
     "passport": "latest",
     "passport-saml": "latest"

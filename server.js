@@ -11,8 +11,6 @@ var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
 var fs              = require('fs');
 var helmet          = require('helmet');
-var http            = require('http');
-var https           = require('https');
 var morgan          = require('morgan');
 var passport        = require('passport');
 var session         = require('express-session');
@@ -55,7 +53,6 @@ app.use(session({
 // content to display on webapp
 app.use(express.static(__dirname + '/public'));
 
-
 // passport config
 var SamlStrategy = require('passport-saml').Strategy;
 
@@ -97,21 +94,16 @@ app.listen(port);
 console.log('Welcome to the SAML app on port ' + port);
 
 // routes ======================================================================
-// LANDING PAGE (with the login link)
+// LANDING page (with the login link)
 app.get('/', function(req, res) {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) { // if auth then redir to home, otherwise go to index page
         res.redirect('/home');
     } else {
         res.sendFile(path.join(__dirname + '/views/index.html'));
     }
 });
 
-/**
-// LOGIN PAGE (with email, password, login, cancel)
-app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname + '/../views/login.html'));
-});**/
-
+// LOGIN for passport
 app.get('/login',
     passport.authenticate('saml', { failureRedirect: '/login/fail' }),
     function (req, res) {
@@ -119,6 +111,7 @@ app.get('/login',
     }
 );
 
+// CALLBACK for passport
 app.post('/login/callback',
     passport.authenticate('saml', { failureRedirect: '/login/fail' }),
     function(req, res) {
@@ -126,6 +119,7 @@ app.post('/login/callback',
     }
 );
 
+// LOGIN FAIL handler for passport
 app.get('/login/fail',
     function(req, res) {
         res.status(401).send('Login failed');
@@ -144,7 +138,7 @@ app.get('/logout', function(req, res) {
     });
 });
 
-// HOME PAGE (once authenticated only), different based on role (admin vs normal)
+// HOME page (once authenticated only), different based on role (admin vs normal)
 app.get('/home', ensureAuthenticated,
     function(req, res) {
         if (req.user["http://wso2.org/claims/role"].indexOf('admin') > 0) {
@@ -155,7 +149,7 @@ app.get('/home', ensureAuthenticated,
     }
 );
 
-// metadata handle
+// METADATA handler
 app.get('/Metadata',
     function(req, res) {
         res.type('application/xml');
@@ -163,13 +157,13 @@ app.get('/Metadata',
     }
 );
 
-// general error handler
+// ERROR handler
 app.use(function(err, req, res, next) {
     console.log("Fatal error: " + JSON.stringify(err));
     next(err);
 });
 
-// auth function
+// AUTH function
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated())
         return next();
