@@ -14,7 +14,7 @@ keytool -importkeystore -srckeystore wso2carbon.jks -destkeystore wso2carbon.p12
 
 <br />
 
-#### enerating ```cert/wso2/openssl-certwso2.pem```:
+#### Generating ```cert/wso2/openssl-certwso2.pem```:
 ```
 openssl pkcs12 -in wso2carbon.p12  -nokeys -out openssl-certwso2.pem
 ``` 
