@@ -45,7 +45,7 @@ app.use(session({
         httpOnly: true,
         //domain: 'example.com',
         //path: 'foo/bar',
-        maxAge: 30 * 60 * 1000 // 30 minutes
+        maxAge: 3 * 6 * 1000 // 30 minutes
     },
     rolling: true
 }));

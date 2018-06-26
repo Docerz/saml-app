@@ -14,35 +14,24 @@ module.exports = function(app, passport, samlStrategy, cert) {
     });
 
     // LOGIN for passport
-    app.get('/login',
-        passport.authenticate('saml', {failureRedirect: '/login/fail'}),
-        function (req, res) {
-            res.redirect('/home');
-        }
-    );
+    app.get('/login', passport.authenticate('saml', {failureRedirect: '/login/fail'}), function (req, res) {
+        res.redirect('/home');
+    });
 
     // CALLBACK for passport
-    app.post('/login/callback',
-        passport.authenticate('saml', {failureRedirect: '/login/fail'}),
-        function (req, res) {
-            res.redirect('/home');
-        }
-    );
+    app.post('/login/callback', passport.authenticate('saml', {failureRedirect: '/login/fail'}), function (req, res) {
+        res.redirect('/home');
+    });
 
     // CALLBACK for passport
-    app.post('/logout/callback',
-        passport.authenticate('saml', {failureRedirect: '/login/fail'}),
-        function (req, res) {
-            res.redirect('/');
-        }
-    );
+    app.post('/logout/callback', passport.authenticate('saml', {failureRedirect: '/login/fail'}), function (req, res) {
+        res.redirect('/');
+    });
 
     // LOGIN FAIL handler for passport
-    app.get('/login/fail',
-        function (req, res) {
-            res.status(401).send('Login failed');
-        }
-    );
+    app.get('/login/fail', function (req, res) {
+        res.status(401).send('Login failed');
+    });
 
 
     // LOGOUT (truncate session, and redirect to landing page)
@@ -56,46 +45,47 @@ module.exports = function(app, passport, samlStrategy, cert) {
     });
 
     // HOME page (once authenticated only), display username, organization, and roles
-    app.get('/home', ensureAuthenticated,
-        function (req, res) {
-            var data = { // stores all the data for handlebars to use
-                username: req.user.nameID,
-                organization: req.user['http://wso2.org/claims/organization'],
-                roles: req.user['http://wso2.org/claims/role']
-            };
+    app.get('/home', ensureAuthenticated, function (req, res) {
+        var data = { // stores all the data for handlebars to use
+            username: req.user.nameID,
+            organization: req.user['http://wso2.org/claims/organization'],
+            roles: req.user['http://wso2.org/claims/role']
+        };
 
-            // read the html file apply the handlebar substitutions to it
-            fs.readFile(path.join(__dirname + '/../views/home.html'), 'utf-8', function(error, source) {
-                // helper method that will take a "certain string" and make it "Capital Case"
-                handlebars.registerHelper('capital_case', function (sentence) {
-                    var words = sentence.split(' '); // split on spaces
-                    for (var i = 0; i < words.length; i++) { // loop through each word
-                        words[i] = words[i][0].toUpperCase() + words[i].substr(1); // upper case it
-                    }
-                    sentence = words.join(' '); // join into string again
-                    return sentence;
-                });
-
-                var template = handlebars.compile(source); // compile handlebar substitution into a function
-                var html = template(data); // execute function
-
-                res.send(html); // render page
+        // read the html file apply the handlebar substitutions to it
+        fs.readFile(path.join(__dirname + '/../views/home.html'), 'utf-8', function(error, source) {
+            // helper method that will take a "certain string" and make it "Capital Case"
+            handlebars.registerHelper('capital_case', function (sentence) {
+                var words = sentence.split(' '); // split on spaces
+                for (var i = 0; i < words.length; i++) { // loop through each word
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1); // upper case it
+                }
+                sentence = words.join(' '); // join into string again
+                return sentence;
             });
-        }
-    );
+
+            var template = handlebars.compile(source); // compile handlebar substitution into a function
+            var html = template(data); // execute function
+
+            res.send(html); // render page
+        });
+    });
 
     // METADATA handler
-    app.get('/metadata',
-        function (req, res) {
-            res.type('application/xml');
-            res.status(200).send(samlStrategy.generateServiceProviderMetadata(cert));
-        }
-    );
+    app.get('/metadata', function (req, res) {
+        res.type('application/xml');
+        res.status(200).send(samlStrategy.generateServiceProviderMetadata(cert));
+    });
 
     // ERROR handler
     app.use(function (err, req, res, next) {
         console.log("Fatal error: " + JSON.stringify(err));
         next(err);
+    });
+
+    // CATCHALL handler
+    app.all('*', function (req, res) {
+        res.status(404).send("This is a dead-end");
     });
 };
 
