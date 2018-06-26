@@ -71,13 +71,15 @@ var samlStrategy = new SamlStrategy({
     host: passportConfig.HOST,
     entryPoint: passportConfig.ENTRY_POINT, // the sso path
     issuer: passportConfig.ISSUER, // the SP's SAML issuer name
+    audience: passportConfig.AUDIENCE, // the audience expected in the SAML response, wip
     cert: cert, // if this cert is present it will use it to validate the SAML response that comes back
     privateCert: privateCert, // this cert is use to sign the SAML request thats going
-    //decryptionPvk: decryptionPvk, // this is the ley used to decrypt the assertion coming back, not used rn
+    //decryptionPvk: decryptionPvk, // this is the key used to decrypt the assertion coming back, not used rn
     identifierFormat: passportConfig.NAME_ID_FORMAT, // NameID format
     attributeConsumingServiceIndex: passportConfig.ACS_INDEX, // ACS ID
     logoutUrl: passportConfig.LOGOUT_URL, // SLO url
-    logoutCallbackUrl: passportConfig.LOGOUT_CALLBACK // url to callback to after logout
+    logoutCallbackUrl: passportConfig.LOGOUT_CALLBACK, // url to callback to after logout, doesn't work?
+    validateInResponseTo: true
 }, function(profile, done) {
     nodeProfile = profile;
     console.log('Profile: ' +  JSON.stringify(nodeProfile, null, 4));
@@ -94,4 +96,4 @@ app.listen(port);
 console.log('Welcome to the SAML app on port ' + port);
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport, samlStrategy); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport, samlStrategy, cert); // load our routes and pass in our app and fully configured passport

@@ -11,6 +11,7 @@
     "helmet": "latest",
     "morgan": "latest",
     "passport": "latest",
-    "passport-saml": "latest"
+    "passport-saml": "latest",
+    "handlebars": "latest"
   }
 }

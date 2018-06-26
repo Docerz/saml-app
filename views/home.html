@@ -1,4 +1,4 @@
-<!-- views/admin.html -->
+<!-- views/home.html -->
 <!doctype html>
 <html>
 <head>
@@ -13,7 +13,13 @@
     <div class="container">
         <div class="jumbotron text-center">
             <h1><span><img class="whale" src="/img/whale.png"></span>Welcome to the SAML App</h1>
-            <p>You are now authenticated as an admin user</p>
+            <p>You are now authenticated as "{{capital_case username}}" user from "{{capital_case organization}}" organization</p>
+
+            <p>These are your roles:</p>
+            {{#each roles}}
+                <p style="font-size: 14px;">{{capital_case this}}</p>
+            {{/each}}
+
             <a href="/logout" class="btn btn-default"><span class="fa fa-sign-out"></span>logout</a>
         </div>
     </div>
