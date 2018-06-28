@@ -12,9 +12,8 @@
 <body>
     <div class="container">
         <div class="jumbotron text-center">
-            <h1><span><img class="whale" src="/img/whale.png"></span>Welcome to the SAML App</h1>
-            <p>You are now authenticated as "{{capital_case username}}" user from "{{capital_case organization}}" organization</p>
-
+            <h1>Welcome to the SAML App</h1>
+            <p>You are now authenticated as user: "{{capital_case username}}" from organization: "{{capital_case organization}}"</p>
             <p>These are your roles:</p>
             {{#each roles}}
                 <p style="font-size: 14px;">{{capital_case this}}</p>

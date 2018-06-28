@@ -4,3 +4,4 @@ node_modules/
 *.pem
 *.iml
 *.p12
+.idea/

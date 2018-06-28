@@ -1,3 +1,6 @@
+// routes.js
+
+// grab necessary node modules
 var path        = require("path");
 var handlebars  = require('handlebars');
 var fs          = require('fs');
